@@ -54,7 +54,6 @@ export default function Home() {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          // This matches the @utility opacity-100 in your CSS
           entry.target.classList.add("opacity-100");
           entry.target.classList.remove("opacity-0", "translate-y-10");
         }
@@ -156,7 +155,7 @@ export default function Home() {
       </div>
 
       {/* --- HERO SECTION --- */}
-      <section id="home" className="min-h-screen flex items-center justify-center relative pt-20">
+      <section id="home" className="min-h-screen flex items-center justify-center relative pt-20 pb-20"> {/* Added pb-20 for space */}
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-4xl reveal-on-scroll">
             
@@ -177,7 +176,7 @@ export default function Home() {
               Crafting robust web solutions and aesthetic software experiences from <span className="text-white font-normal">Consolacion, Cebu</span>.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 mb-12"> {/* Added mb-12 to push scroll indicator down */}
               <a href="/CV/Montecalvo_Resume.pdf" download className="px-8 py-4 bg-gold text-dark font-bold rounded-full hover:bg-white hover:scale-105 transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.3)] text-center">
                 Download Resume <i className="fa-solid fa-download ml-2"></i>
               </a>
@@ -188,20 +187,20 @@ export default function Home() {
           </div>
         </div>
         
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 animate-bounce">
+        {/* Adjusted Scroll Indicator Position */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 animate-bounce z-20">
            <span className="text-xs uppercase tracking-widest text-grey">Scroll</span>
            <i className="fa-solid fa-chevron-down text-gold"></i>
         </div>
       </section>
 
-{/* --- ABOUT SECTION (UPDATED WITH PAGINATION) --- */}
-<section id="about" className="py-24 relative bg-black/20">
+      {/* --- ABOUT SECTION --- */}
+      <section id="about" className="py-24 relative bg-black/20">
         <div className="container mx-auto px-6 flex flex-col lg:flex-row gap-16 items-start">
           
           <div className="w-full lg:w-1/3 reveal-on-scroll group perspective">
              <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-card shadow-2xl transform transition-transform duration-500 group-hover:rotate-1 group-hover:scale-[1.02]">
                 <div className="absolute inset-0 bg-gold/20 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10"></div>
-                {/* Placeholders for Image */}
                 <div className="aspect-[4/5] bg-neutral-800 relative">
                   <Image 
                       src="/Pictures/aaa.png" 
@@ -219,12 +218,13 @@ export default function Home() {
               I blend technical expertise with creative design thinking. As an IT student at CTU Danao, I focus on building scalable applications that solve real-world problems while looking beautiful.
             </p>
 
-            <div className="flex flex-wrap gap-4 mb-10 p-1 bg-white/5 rounded-xl w-fit backdrop-blur-sm border border-white/5">
+            {/* MODIFIED: Horizontal scrolling / One line tabs for mobile */}
+            <div className="flex flex-nowrap overflow-x-auto gap-4 mb-10 p-1 bg-white/5 rounded-xl w-full md:w-fit backdrop-blur-sm border border-white/5 scrollbar-hide">
               {['skills', 'education', 'certificates'].map((tab) => (
                 <button 
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`px-6 py-2 rounded-lg text-sm font-semibold uppercase tracking-wider transition-all duration-300 cursor-pointer
+                  className={`px-6 py-2 rounded-lg text-sm font-semibold uppercase tracking-wider transition-all duration-300 cursor-pointer whitespace-nowrap flex-shrink-0
                   ${activeTab === tab ? "bg-gold text-dark shadow-lg" : "text-grey hover:text-white hover:bg-white/5"}`}
                 >
                   {tab}
@@ -234,7 +234,6 @@ export default function Home() {
 
             <div className="min-h-[300px]">
                 {activeTab === 'skills' && (() => {
-                  // --- PAGINATION LOGIC START ---
                   const ALL_SKILLS = [
                       { t: "Web Development", s: "HTML, CSS, JavaScript, Vue.JS, TailwindCSS, PHP, React" },
                       { t: "Backend", s: "Laravel, Node.js" },
@@ -250,11 +249,9 @@ export default function Home() {
                   const itemsPerPage = 6;
                   const totalPages = Math.ceil(ALL_SKILLS.length / itemsPerPage);
                   const currentSkills = ALL_SKILLS.slice((skillsPage - 1) * itemsPerPage, skillsPage * itemsPerPage);
-                  // --- PAGINATION LOGIC END ---
 
                   return (
                     <div className="animate-fadeIn">
-                      {/* Grid for Skills */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {currentSkills.map((item, i) => (
                           <div key={i} className="bg-card p-6 rounded-xl border border-white/5 hover:border-gold/30 transition-all hover:translate-x-1 group">
@@ -264,7 +261,6 @@ export default function Home() {
                         ))}
                       </div>
 
-                      {/* Pagination Controls (Only shows if more than 6 items) */}
                       {totalPages > 1 && (
                         <div className="flex justify-center items-center gap-4 mt-8 pt-4 border-t border-white/5">
                             <button 
@@ -356,17 +352,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- PORTFOLIO (UPDATED WITH CLICK EVENT & MODAL) --- */}
       {/* --- PORTFOLIO --- */}
       <section id="portfolio" className="py-24 bg-gradient-to-b from-dark to-black relative">
         <div className="container mx-auto px-6">
-           {/* Header - Removed the link from here */}
            <div className="mb-12 reveal-on-scroll text-center md:text-left">
                <h2 className="text-4xl md:text-5xl font-bold">Featured <span className="text-gold">Projects</span></h2>
                <p className="text-grey mt-2">Selected works from my academic and personal journey.</p>
            </div>
 
-           {/* Video Grid */}
            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {[
                 { title: "CTU Shop", tag: "E-Commerce Logic", vid: "/Video/ctudanaoApparel.mp4" },
@@ -404,7 +397,6 @@ export default function Home() {
               ))}
            </div>
 
-           {/* ADDED: Bottom Center GitHub Button */}
            <div className="flex justify-center mt-12 reveal-on-scroll">
               <a 
                 href="https://github.com/MontecalvoAm" 
@@ -416,7 +408,6 @@ export default function Home() {
            </div>
         </div>
 
-        {/* --- VIDEO MODAL (Focus View) --- */}
         {activeVideo && (
             <div 
               className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 animate-in fade-in duration-300"
@@ -444,7 +435,7 @@ export default function Home() {
         )}
       </section>
 
-      {/* --- CONTACT (FIXED TEXT ERRORS) --- */}
+      {/* --- CONTACT --- */}
       <section id="contact" className="py-24 relative overflow-hidden">
         <div className="absolute -right-20 top-20 w-96 h-96 bg-gold/5 rounded-full blur-[100px] pointer-events-none"></div>
 
@@ -452,7 +443,6 @@ export default function Home() {
            <div className="bg-card/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 md:p-12 flex flex-col lg:flex-row gap-12 reveal-on-scroll">
               
               <div className="w-full lg:w-1/3 space-y-8">
-                 {/* FIX: Used &apos; instead of ' */}
                  <h2 className="text-4xl font-bold">Let&apos;s work <br /><span className="text-gold">together.</span></h2>
                  <p className="text-grey">I&apos;m currently available for freelance work and internship opportunities.</p>
                  
